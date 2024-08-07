@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otp-warszawa
+  labels:
+    app: otp-warszawa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otp-warszawa
+  template:
+    metadata:
+      labels:
+        app: otp-warszawa
+    spec:
+      containers:
+      - name: otp-warszawa
+        image: registry.hub.docker.com/opentripplanner/opentripplanner:2.6.0
+        ports:
+        - containerPort: 8080
