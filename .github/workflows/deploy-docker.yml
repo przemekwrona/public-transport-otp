@@ -10,7 +10,6 @@ env:
 jobs:
   docker:
     runs-on: ubuntu-latest
-    name: Build Artifact ${{ inputs.artifact }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
