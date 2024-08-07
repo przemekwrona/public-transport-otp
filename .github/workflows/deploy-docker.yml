@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  REGISTRY: registry.digitalocean.com/igeolab
+  DOCKER_REGISTRY: registry.digitalocean.com/igeolab
   DOCKER_TAG: public-transport/otp-warsaw:1.0.0
 
 jobs:
