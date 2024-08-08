@@ -1,0 +1,14 @@
+FROM openjdk:21-slim
+
+MAINTAINER igeolab.pl
+WORKDIR /app
+
+ENV JAVA_OPTS = ''
+
+COPY otp/otp-*.jar /app/otp.jar
+COPY data/warszawa/osm/warszawa.pbf /otp/data/warszawa.pbf
+
+COPY https://mkuran.pl/gtfs/warsaw.zip /otp/data/warszawa.gtfs.zip
+COPY https://mkuran.pl/gtfs/wkd.zip /otp/data/warszawa-wkd.gtfs.zip
+
+ENTRYPOINT exec java $JAVA_OPTS -jar /app/otp.jar --build --serve /otp/data
