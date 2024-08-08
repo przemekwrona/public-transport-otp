@@ -1,4 +1,4 @@
-name: {{ inputs.city }} GTFS
+name: GTFS
 
 on:
   workflow_dispatch:
