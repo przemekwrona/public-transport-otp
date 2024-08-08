@@ -2,6 +2,12 @@ name: Warsaw GTFS
 
 on:
   workflow_dispatch:
+    inputs:
+      city:
+        type: choice
+        options:
+          - warszawa
+          - krakow
 
 env:
   DOCKER_REGISTRY: registry.digitalocean.com/igeolab
@@ -13,6 +19,22 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - uses: kanga333/variable-mapper@master
+        with:
+          key: ${{ inputs.city }}
+          map: |
+            {
+              "warszawa": {
+                "DOCKER_TAG": "public-transport/otp-warszawa:1.0.0"
+              },
+              "krakow": {
+                "DOCKER_TAG": "public-transport/otp-krakow:1.0.0"
+              },
+              ".*": {
+                "DOCKER_TAG": "public-transport/otp-unknown:1.0.0"
+              }
+            }
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
