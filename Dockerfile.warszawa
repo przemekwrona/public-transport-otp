@@ -6,7 +6,7 @@ WORKDIR /app
 ENV JAVA_OPTS = ''
 
 COPY otp/otp-*.jar /app/otp.jar
-COPY data/warszawa/osm/warszawa.pbf /otp/data/warszawa.pbf
+COPY data/warszawa/warszawa.pbf /otp/data/warszawa.pbf
 
 ADD https://mkuran.pl/gtfs/warsaw.zip /otp/data/warszawa.gtfs.zip
 ADD https://mkuran.pl/gtfs/wkd.zip /otp/data/warszawa-wkd.gtfs.zip
