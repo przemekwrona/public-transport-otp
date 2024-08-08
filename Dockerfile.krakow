@@ -1,0 +1,14 @@
+FROM openjdk:21-slim
+
+MAINTAINER igeolab.pl
+WORKDIR /app
+
+ENV JAVA_OPTS = ''
+
+COPY otp/otp-*.jar /app/otp.jar
+COPY data/krakow/osm/krakow.pbf /otp/data/krakow.pbf
+
+ADD https://gtfs.ztp.krakow.pl/GTFS_KRK_A.zip /otp/data/krakow-bus.gtfs.zip
+ADD https://gtfs.ztp.krakow.pl/GTFS_KRK_T.zip /otp/data/krakow-tram.gtfs.zip
+
+ENTRYPOINT exec java $JAVA_OPTS -jar /app/otp.jar --build --serve /otp/data

@@ -1,27 +1,47 @@
-name: Warsaw GTFS
+name: GTFS
 
 on:
   workflow_dispatch:
+    inputs:
+      city:
+        type: choice
+        options:
+          - warszawa
+          - krakow
 
 env:
-  REGISTRY: registry.digitalocean.com/igeolab
-  DOCKER_TAG: public-transport/otp-warsaw:1.0.0
+  DOCKER_REGISTRY: registry.digitalocean.com/igeolab
+#  DOCKER_TAG: public-transport/otp-warsaw:1.0.0
 
 jobs:
   docker:
     runs-on: ubuntu-latest
-    name: Build Artifact ${{ inputs.artifact }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - uses: kanga333/variable-mapper@master
+        with:
+          key: ${{ inputs.city }}
+          map: |
+            {
+              "warszawa": {
+                "DOCKER_FILE": "Dockerfile.warszawa",
+                "DOCKER_TAG": "public-transport/otp-warszawa:1.0.0"
+              },
+              "krakow": {
+                "DOCKER_FILE": "Dockerfile.krakow",
+                "DOCKER_TAG": "public-transport/otp-krakow:1.0.0"
+              }
+            }
+          export_to: env
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Build docker Warsaw GTFS
-        run: cd ${{ inputs.artifact }} && docker build -t ${{ env.DOCKER_TAG }} .
+        run: docker build -t ${{ env.DOCKER_TAG }} -f ${{ env.DOCKER_FILE }} .
 
       - name: Tag Image
         run: docker tag ${{ env.DOCKER_TAG }} ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_TAG }}
@@ -34,3 +54,18 @@ jobs:
 
       - name: Clear registry
         run: doctl registry garbage-collection start --include-untagged-manifests igeolab --force
+
+  k8s:
+    runs-on: ubuntu-latest
+    needs: [ docker ]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 1200
