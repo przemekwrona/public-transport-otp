@@ -11,7 +11,7 @@ on:
 
 env:
   DOCKER_REGISTRY: registry.digitalocean.com/igeolab
-  DOCKER_TAG: public-transport/otp-warsaw:1.0.0
+#  DOCKER_TAG: public-transport/otp-warsaw:1.0.0
 
 jobs:
   docker:
@@ -34,14 +34,14 @@ jobs:
                 "DOCKER_TAG": "public-transport/otp-krakow:1.0.0"
               }
             }
-          export_to: conf
+          export_to: env
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
       - name: Build docker Warsaw GTFS
-        run: docker build -t ${{ env.DOCKER_TAG }} -f conf.DOCKER_FILE .
+        run: docker build -t ${{ env.DOCKER_TAG }} -f env.DOCKER_FILE .
 
       - name: Tag Image
         run: docker tag ${{ env.DOCKER_TAG }} ${{ env.DOCKER_REGISTRY }}/${{ env.DOCKER_TAG }}
