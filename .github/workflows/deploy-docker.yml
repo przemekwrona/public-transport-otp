@@ -1,4 +1,4 @@
-name: Warsaw GTFS
+name: {{ inputs.city }} GTFS
 
 on:
   workflow_dispatch:
@@ -26,11 +26,11 @@ jobs:
           map: |
             {
               "warszawa": {
-                "DOCKER_FILE": "Dockerfile.warszawa"
+                "DOCKER_FILE": "Dockerfile.warszawa",
                 "DOCKER_TAG": "public-transport/otp-warszawa:1.0.0"
               },
               "krakow": {
-                "DOCKER_FILE": "Dockerfile.krakow"
+                "DOCKER_FILE": "Dockerfile.krakow",
                 "DOCKER_TAG": "public-transport/otp-krakow:1.0.0"
               }
             }
