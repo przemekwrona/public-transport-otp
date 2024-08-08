@@ -6,7 +6,7 @@ WORKDIR /app
 ENV JAVA_OPTS = ''
 
 COPY otp/otp-*.jar /app/otp.jar
-COPY data/krakow/osm/krakow.pbf /otp/data/krakow.pbf
+COPY data/krakow/krakow.pbf /otp/data/krakow.pbf
 
 ADD https://gtfs.ztp.krakow.pl/GTFS_KRK_A.zip /otp/data/krakow-bus.gtfs.zip
 ADD https://gtfs.ztp.krakow.pl/GTFS_KRK_T.zip /otp/data/krakow-tram.gtfs.zip
