@@ -1,0 +1,17 @@
+name: GTFS Schedule
+
+on:
+  schedule:
+    - cron: "0 22 * * *"
+
+jobs:
+  warszawa-gtfs:
+    uses: deploy-docker.yml@main
+    with:
+      city: warszawa
+    secrets: inherit
+  krakow-gtfs:
+    uses: deploy-docker.yml@main
+    with:
+      city: krakow
+    secrets: inherit

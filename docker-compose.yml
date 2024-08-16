@@ -8,7 +8,7 @@ services:
     ports:
       - '8082:8080'
     environment:
-      - JAVA_OPTS=-Xmx3G
+      - JAVA_OPTS=-Xmx4G
 
   gtfs_krakow:
     build:
@@ -18,3 +18,21 @@ services:
       - '8084:8080'
     environment:
       - JAVA_OPTS=-Xmx1G
+
+  gtfs_wroclaw:
+    build:
+      dockerfile: Dockerfile.wroclaw
+    container_name: gtfs_wroclaw
+    ports:
+      - '8088:8080'
+    environment:
+      - JAVA_OPTS=-Xmx1G
+
+  gtfs_cyprus:
+    build:
+      dockerfile: Dockerfile.cyprus
+    container_name: gtfs_cyprus
+    ports:
+      - '8086:8080'
+    environment:
+      - JAVA_OPTS=-Xmx2G

@@ -1,0 +1,19 @@
+FROM openjdk:21-slim
+
+MAINTAINER igeolab.pl
+WORKDIR /app
+
+ENV JAVA_OPTS = ''
+
+COPY otp/otp-*.jar /app/otp.jar
+COPY data/cyprus/cyprus.pbf /otp/data/cyprus.pbf
+
+ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C10_google_transit.zip&rel=True /otp/data/larnaca.gtfs.zip
+ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C9_google_transit.zip&rel=True /otp/data/nicosia.gtfs.zip
+#ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C6_google_transit.zip&rel=True /otp/data/limasol.gtfs.zip
+ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C2_google_transit.zip&rel=True /otp/data/pafos.gtfs.zip
+#ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C4_google_transit.zip&rel=True /otp/data/famagusta.gtfs.zip
+#ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C11_google_transit.zip&rel=True /otp/data/pame-express.gtfs.zip
+#ADD https://www.motionbuscard.org.cy/opendata/downloadfile?file=GTFS%5C5_google_transit.zip&rel=True /otp/data/intercity-buses.gtfs.zip
+
+ENTRYPOINT exec java $JAVA_OPTS -jar /app/otp.jar --build --serve /otp/data

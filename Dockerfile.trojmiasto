@@ -1,0 +1,14 @@
+FROM openjdk:21-slim
+
+MAINTAINER igeolab.pl
+WORKDIR /app
+
+ENV JAVA_OPTS = ''
+
+COPY otp/otp-*.jar /app/otp.jar
+COPY data/trojmiasto/trojmiasto.pbf /otp/data/trojmiasto.pbf
+
+ADD https://ckan.multimediagdansk.pl/dataset/c24aa637-3619-4dc2-a171-a23eec8f2172/resource/30e783e4-2bec-4a7d-bb22-ee3e3b26ca96/download/gtfsgoogle.zip /otp/data/gdansk.gtfs.zip
+ADD http://api.zdiz.gdynia.pl/pt/gtfs.zip /otp/data/gdynia.gtfs.zip
+
+ENTRYPOINT exec java $JAVA_OPTS -jar /app/otp.jar --build --serve /otp/data

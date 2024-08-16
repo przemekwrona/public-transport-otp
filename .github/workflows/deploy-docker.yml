@@ -9,6 +9,12 @@ on:
           - warszawa
           - krakow
 
+  workflow_call:
+    inputs:
+      city:
+        required: true
+        type: string
+
 env:
   DOCKER_REGISTRY: registry.digitalocean.com/igeolab
 #  DOCKER_TAG: public-transport/otp-warsaw:1.0.0
