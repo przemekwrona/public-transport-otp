@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: otp-warszawa
+  name: otp-warsaw
   labels:
-    app: otp-warszawa
+    app: otp-warsaw
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: otp-warszawa
+      app: otp-warsaw
   template:
     metadata:
       labels:
-        app: otp-warszawa
+        app: otp-warsaw
     spec:
       containers:
-      - name: otp-warszawa
-        image: registry.hub.docker.com/opentripplanner/opentripplanner:2.6.0
-        ports:
-        - containerPort: 8080
+        - name: otp-warsaw
+          image: registry.hub.docker.com/igeolab/public-transport/otp-warszawa:1.0.0
+          ports:
+            - containerPort: 8080
