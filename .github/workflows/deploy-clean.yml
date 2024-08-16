@@ -1,6 +1,8 @@
 name: GTFS Clean
 
-on: workflow_call
+on:
+  workflow_call:
+  workflow_dispatch:
 
 env:
   DOCKER_REGISTRY: registry.digitalocean.com/igeolab
