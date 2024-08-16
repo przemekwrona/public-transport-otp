@@ -2,7 +2,7 @@ name: GTFS Schedule
 
 on:
   schedule:
-    - cron: "50 19 * * *"
+    - cron: "48 19 * * *"
 
 jobs:
   warszawa-gtfs:
