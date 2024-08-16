@@ -18,7 +18,13 @@ jobs:
       city: krakow
     secrets: inherit
 
+  cyprus-gtfs:
+    uses: ./.github/workflows/deploy-docker.yml
+    with:
+      city: cyprus
+    secrets: inherit
+
   clean:
     uses: ./.github/workflows/deploy-clean.yml
-    needs: [ warszawa-gtfs, krakow-gtfs]
+    needs: [ warszawa-gtfs, krakow-gtfs, cyprus-gtfs]
     secrets: inherit
