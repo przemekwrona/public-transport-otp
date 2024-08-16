@@ -17,3 +17,7 @@ jobs:
     with:
       city: krakow
     secrets: inherit
+
+  clean:
+    uses: ./.github/workflows/deploy-clean.yml
+    secrets: inherit

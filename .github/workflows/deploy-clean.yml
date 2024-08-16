@@ -1,0 +1,24 @@
+name: GTFS Deploy
+
+on: workflow_call
+
+env:
+  DOCKER_REGISTRY: registry.digitalocean.com/igeolab
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 1200
+
+      - name: Clear registry
+        run: doctl registry garbage-collection start --include-untagged-manifests igeolab --force
