@@ -1,4 +1,4 @@
-name: GTFS Deploy
+name: GTFS Clean
 
 on: workflow_call
 
