@@ -8,6 +8,7 @@ on:
         options:
           - warszawa
           - krakow
+          - cyprus
 
   workflow_call:
     inputs:
