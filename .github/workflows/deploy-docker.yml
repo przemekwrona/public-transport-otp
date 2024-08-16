@@ -17,7 +17,8 @@ on:
 
 env:
   DOCKER_REGISTRY: registry.digitalocean.com/igeolab
-#  DOCKER_TAG: public-transport/otp-warsaw:1.0.0
+  DOCKER_FILE: Dockerfile.${{ inputs.city }}
+  DOCKER_TAG: public-transport/otp-${{ inputs.city }}:1.0.0
 
 jobs:
   docker:
@@ -26,27 +27,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: kanga333/variable-mapper@master
-        with:
-          key: ${{ inputs.city }}
-          map: |
-            {
-              "warszawa": {
-                "DOCKER_FILE": "Dockerfile.warszawa",
-                "DOCKER_TAG": "public-transport/otp-warszawa:1.0.0"
-              },
-              "krakow": {
-                "DOCKER_FILE": "Dockerfile.krakow",
-                "DOCKER_TAG": "public-transport/otp-krakow:1.0.0"
-              }
-            }
-          export_to: env
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Build docker Warsaw GTFS
+      - name: Build GTFS docker image
         run: docker build -t ${{ env.DOCKER_TAG }} -f ${{ env.DOCKER_FILE }} .
 
       - name: Tag Image
