@@ -1,4 +1,4 @@
-name: GTFS
+name: GTFS Deploy
 
 on:
   workflow_dispatch:
