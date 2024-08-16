@@ -5,6 +5,7 @@ on:
     - cron: "33 20 * * *"
 
   workflow_dispatch:
+    inputs:
 
 jobs:
   warszawa-gtfs:
